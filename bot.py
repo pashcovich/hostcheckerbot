@@ -1,10 +1,23 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import logging
 
 __author__ = ' Ilya Sosnovskiy - https://github.com/pashcovich'
 __version__ = 0.1
 
 import requests
+
+
+loger = logging.getLogger()
+loger.setLevel(logging.INFO)
+log_format = logging.Formatter("%(asctime)s  [%(levelname)-5.5s]  %(message)s")
+
+logPath = './logs/'
+logFile = 'bot'
+
+fileHandler = logging.FileHandler("{0}/{1}.log".format(logPath, logFile))
+fileHandler.setFormatter(log_format)
+loger.addHandler(fileHandler)
 
 
 class BotHandler:
@@ -37,6 +50,7 @@ class BotHandler:
     def get_last_update(self):
         get_result = self.get_updates()
         if len(get_result) > 0:
+            loger.info(get_result)
             last_update = get_result[-1]
         else:
             last_update = None

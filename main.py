@@ -1,14 +1,17 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import config
+from bot import BotHandler
+
 __author__ = ' Ilya Sosnovskiy - https://github.com/pashcovich'
 __version__ = 0.1
 
-import config
-
-from bot import BotHandler
-
 bot = BotHandler(config.TG_TOKEN)
+
+
+def start(chat_id):
+    bot.send_message(chat_id, 'Hello here!')
 
 
 def handle_text(text):
@@ -16,7 +19,11 @@ def handle_text(text):
 
 
 def handle_command(command):
-    pass
+    if command[1:] == 'start':
+        start()
+    else:
+        pass
+
 
 
 def main():
@@ -32,16 +39,15 @@ def main():
 
                 if "message" in lu:
                     lc_id = lu['message']['chat']['id']
+                    lc_username = lu['message']['from']
                     if 'text' in lu['message']:
                         lc_txt = lu['message']['text']
                     else:
                         lc_txt = ''
                     if 'entities' in lu['message']:
-                        lm_type = lu['message']['entities'][0]['type']
+                        lm_ents = lu['message']['entities']
                     else:
-                        lm_type = 'usual'
-
-                    print('New msg - User: %(uid)s, msg.type: %(type)s, msg.text: %(txt)s ' % {"uid": lc_id, "type": lm_type, "txt": lc_txt.lower()})
+                        lm_ents = []
 
                 new_offset = lu_id + 1
 
