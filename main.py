@@ -14,16 +14,52 @@ def start(chat_id):
     bot.send_message(chat_id, 'Hello here!')
 
 
-def handle_text(text):
+def help(chat_id):
+    bot.send_message(chat_id, 'Help!')
+
+
+def handle_text(chat_id, msg):
+    bot.send_message(chat_id, 'Your msg received.')
+
+
+def ping_host(chat_id, args):
     pass
 
 
-def handle_command(command):
-    if command[1:] == 'start':
-        start()
-    else:
-        pass
+def who_host(chat_id, args):
+    pass
 
+
+def udp_check(chat_id):
+    pass
+
+
+def tcp_check(chat_id):
+    pass
+
+
+def handle_command(chat_id, command, args=None, user_id=None):
+    #print(command)
+    if command[1:] == 'start':
+        start(chat_id)
+    elif command[1:] == 'help':
+        help(chat_id)
+    elif command[1:] == 'ping':
+        ping_host(chat_id, args)
+    elif command[1:] == 'dns':
+        who_host(chat_id, args)
+    elif command[1:] == 'udp_check':
+        udp_check(chat_id, args )
+    elif command[1:] == 'tcp_check':
+        tcp_check(chat_id, args)
+    elif command[1:] == 'check_sudo':
+        if chat_id in config.ADMIN_LIST:  #users id  in ADMIN_LIST and chat_id  must be the same type e.x. INT
+            bot.send_message(chat_id, "You are the superuser!")
+        else:
+            bot.send_message(chat_id, "You are not in the superusers list!")
+
+    else:
+        bot.send_message(chat_id, "I don't know such command")
 
 
 def main():
@@ -39,15 +75,23 @@ def main():
 
                 if "message" in lu:
                     lc_id = lu['message']['chat']['id']
-                    lc_username = lu['message']['from']
+                    lc_user = lu['message']['from']['id']
                     if 'text' in lu['message']:
-                        lc_txt = lu['message']['text']
+                        lm_txt = lu['message']['text']
+                        lm_split_txt = lm_txt.split()
+                        if lm_txt[0] == "/":
+                            if len(lm_split_txt) > 1:
+                                handle_command(lc_id, lm_split_txt[0], lm_split_txt[1:])
+                            else:
+                                handle_command(lc_id, lm_split_txt[0])
                     else:
-                        lc_txt = ''
+                        lm_txt = ''
                     if 'entities' in lu['message']:
                         lm_ents = lu['message']['entities']
+
                     else:
                         lm_ents = []
+                        handle_text(lc_id, lm_txt)
 
                 new_offset = lu_id + 1
 
