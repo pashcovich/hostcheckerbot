@@ -53,7 +53,7 @@ def handle_command(chat_id, command, args=None, user_id=None):
     elif command[1:] == 'tcp_check':
         tcp_check(chat_id, args)
     elif command[1:] == 'check_sudo':
-        if chat_id in config.ADMIN_LIST:  #users id  in ADMIN_LIST and chat_id  must be the same type e.x. INT
+        if chat_id in config.ADMIN_LIST:  #users id  in ADMIN_LIST and chat_id  must both be the same type e.x. INT
             bot.send_message(chat_id, "You are the superuser!")
         else:
             bot.send_message(chat_id, "You are not in the superusers list!")
