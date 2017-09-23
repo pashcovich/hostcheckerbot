@@ -1,4 +1,4 @@
-#HostCheckerBot (in development)
+# HostCheckerBot (in development)
 Telegram bot for check hosts
 
 # Requirements
@@ -11,11 +11,15 @@ pip install -r requirements.txt
 Than you have to create `config.py`:
 
 ```Python
-# Telegram @OetenBot API Token
+# Telegram @HostCheckerBot API Token
 TG_TOKEN = '<YOUR_API_KEY>'
 
+
+SQLITE_DB = 'hcb.db'
+SHELVE_DB = 'shelve.db'
+
 # if user_id in this list bot ask user the password:
-#       if its correct user can do some more things
+#       if this correct - user can do some more things
 ADMIN_LIST = ['<U1_TG_ID>', '<U2_TG_ID>']
 ADMIN_PASSWORD = '<ADMIN_PASSWORD>'
 ```
