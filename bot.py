@@ -2,11 +2,10 @@
 # -*- coding: utf-8 -*-
 import logging
 
-__author__ = ' Ilya Sosnovskiy - https://github.com/pashcovich'
-__version__ = 0.1
-
 import requests
 
+__author__ = ' Ilya Sosnovskiy - https://github.com/pashcovich'
+__version__ = 0.1
 
 loger = logging.getLogger()
 loger.setLevel(logging.INFO)
